@@ -1,18 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule, ApplicationRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { AgmCoreModule } from '@agm/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { DirectionForm } from './direction-form/direction-form.component';
+import { AgmDirectionModule } from 'agm-direction';
+import { ETAService }   from './etaService';
+import { GetRoutesService } from './get-routes.service';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyAGblljBdom8fuPLd7J2dolsnHFGs0zvvE'
+        }),
+        AgmDirectionModule
+    ],
+    declarations: [ AppComponent, DirectionForm ],
+    bootstrap: [ AppComponent ],
+    providers: [GetRoutesService]
+
 })
-export class AppModule { }
+export class AppModule {
+    constructor(){}
+}
