@@ -28,39 +28,25 @@ export class AppComponent {
 
 
 
-    getStatus(status){
-        console.log('status', status);
-    }
+    getStatus(status){}
     getDirections(change){
-       // console.log('change', change.routes);
         let routes = [];
         let app = this;
         change.routes.forEach(function(route){
            // let routesService = new GetRoutesService();
             let r = new Route(route.legs[0]);
-
             routes.push(r);
             app.getRoutes.addStep(r);
-            console.log('route', app);
         });
 
     }
 
     setDir= function(location){
-        console.log('deerrrr', location);
         this.dir = {
             origin: location.origin.address,
             destination: location.destination.address
         };
-        /*this.addListener('directions_changed', () => {
-            //this.onChange.emit(this.directionsDisplay.getDirections());
-            console.log('directions changed')
-        });*/
     };
-   // @ViewChild(DirectionForm) origin: ElementRef;
 
-    ngAfterViewInit() {
-        //this.origin.nativeElement.value = "1223 N Cleaver";
-        console.log('after init', this);
-    }
+    ngAfterViewInit() {}
 }

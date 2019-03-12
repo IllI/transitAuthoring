@@ -13,13 +13,10 @@ export class GetRoutesService {
         let walkTime = parseInt(step.duration.text.split(' ')[0]);
 
         this.totalEta+=walkTime;
-        console.log('totes', this.totalEta);
+
     }
     addBusTime(step){
-        this.getBusStop(step).then(rxlist => {
-
-                console.log('success', rxlist);
-            },
+        this.getBusStop(step).then(response => {},
             error =>  {
                 console.error('An error occurred in retrieving rx list, navigating to login: ', error);
             });
@@ -36,43 +33,20 @@ export class GetRoutesService {
         // http://localhost:3000/getStop/50/Damen%20%26%20Milwaukee%2FNorth%20Ave/Damen%20%26%20Montrose
         let promise = new Promise((resolve, reject) => {
             let apiURL =  `http://localhost:3000/getStop/${lineId}/${encodeURIComponent(departureName)}/${encodeURIComponent(arrivalName)}`;
-            console.log('url', apiURL);
             return  this.http.get(apiURL)
                 .toPromise()
                 .then(
                 res => { // Success
-                    console.log('resolved', res.json());
                     resolve();
                 },
                 msg => {
-                    console.log('errR', apiURL, msg);
+                    console.log('api error', apiURL, msg);
                 }
             );
-
-            /*this.http.get(apiURL)
-                .toPromise()
-                .catch(e => console.log('reject', e))
-                .then(r => console.log("then: " + r));*/
 
 
         });
         return promise;
-
-
-       /* let promise = new Promise((resolve, reject) =>{
-            let url = '${this.apiRoot}/getStop/${lineId}/${+encodeURIComponent(departureName)}/${+encodeURIComponent(arrivalName)}';
-            http.get(url)
-                .toPromise()
-                .then(
-                res => { // Success
-                    console.log(res.json());
-                    resolve();
-                }
-            );
-        });
-        return promise;*/
-
-
     }
     getBusETAs(){}
     addStep(step){
@@ -95,7 +69,6 @@ export class GetRoutesService {
                 this.addBusTime(step);
             }
         }
-        //console.log('pass', step)
 
     }
 }
