@@ -37,7 +37,7 @@ export class GetRoutesService {
         let promise = new Promise((resolve, reject) => {
             let apiURL =  `http://localhost:3000/getStop/${lineId}/${encodeURIComponent(departureName)}/${encodeURIComponent(arrivalName)}`;
             console.log('url', apiURL);
-            return  this.http.jsonp(apiURL)
+            return  this.http.get(apiURL)
                 .toPromise()
                 .then(
                 res => { // Success
