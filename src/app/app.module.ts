@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AgmCoreModule } from '@agm/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpClientJsonpModule  } from '@angular/common/http';
 import { DirectionForm } from './direction-form/direction-form.component';
 import { AgmDirectionModule } from 'agm-direction';
 import { ETAService }   from './etaService';
@@ -16,6 +16,7 @@ import { GetRoutesService } from './get-routes.service';
         CommonModule,
         FormsModule,
         HttpClientModule,
+        HttpClientJsonpModule ,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyAGblljBdom8fuPLd7J2dolsnHFGs0zvvE'
         }),

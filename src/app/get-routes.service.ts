@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions, URLSearchParams }
-from '@angular/http';
+import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 @Injectable()
 export class GetRoutesService {
-
+    //constructor(){}
     constructor(private http: HttpClient) { }
     totalEta= 0;
     apiRoot:string = 'http://localhost:3000/';
@@ -17,37 +16,45 @@ export class GetRoutesService {
         console.log('totes', this.totalEta);
     }
     addBusTime(step){
-        console.log('bus', step);
-        this.getBusStop(step);
+        this.getBusStop(step).then(rxlist => {
+
+                console.log('success', rxlist);
+            },
+            error =>  {
+                console.error('An error occurred in retrieving rx list, navigating to login: ', error);
+            });
 
     }
     getBusDirection(step){}
     getBusStop(step){
         let line = step.transit;
-        let lineId = line.short_name;
+        let lineId = line.line.short_name;
         let arrivalName = line.arrival_stop.name;
         let departureName = line.departure_stop.name;
-        let http = new HttpClient();
+      // let http = new HttpClient();
 
-        console.log('http cli', this.http);
-       // http://localhost:3000/getStop/50/Damen%20%26%20Milwaukee%2FNorth%20Ave/Damen%20%26%20Montrose
+        // http://localhost:3000/getStop/50/Damen%20%26%20Milwaukee%2FNorth%20Ave/Damen%20%26%20Montrose
         let promise = new Promise((resolve, reject) => {
-            let apiURL =  '${this.apiRoot}/getStop/${lineId}/${+encodeURIComponent(departureName)}/${+encodeURIComponent(arrivalName)}';
-            this.http
-                .get(apiURL)
+            let apiURL =  `http://localhost:3000/getStop/${lineId}/${encodeURIComponent(departureName)}/${encodeURIComponent(arrivalName)}`;
+            console.log('url', apiURL);
+            return  this.http.jsonp(apiURL)
                 .toPromise()
                 .then(
-                res => {
-                    // Success
-                    console.log('api', apiURL);
-
+                res => { // Success
+                    console.log('resolved', res.json());
                     resolve();
                 },
                 msg => {
-                    // Error
-                    reject(msg);
+                    console.log('errR', apiURL, msg);
                 }
             );
+
+            /*this.http.get(apiURL)
+                .toPromise()
+                .catch(e => console.log('reject', e))
+                .then(r => console.log("then: " + r));*/
+
+
         });
         return promise;
 
