@@ -8,9 +8,6 @@ import {Route } from './route';
 import {ETAService } from './etaService';
 import { GetRoutesService } from './get-routes.service';
 
-//@Injectable();
-//import { DirectionForm } from './direction.form.component';
-
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
@@ -33,7 +30,6 @@ export class AppComponent {
         let routes = [];
         let app = this;
         change.routes.forEach(function(route){
-           // let routesService = new GetRoutesService();
             let r = new Route(route.legs[0]);
             routes.push(r);
             app.getRoutes.addStep(r);

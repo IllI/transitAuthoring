@@ -4,7 +4,6 @@ import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angul
 
 @Injectable()
 export class GetRoutesService {
-    //constructor(){}
     constructor(private http: HttpClient) { }
     totalEta= 0;
     apiRoot:string = 'http://localhost:3000/';
@@ -28,9 +27,6 @@ export class GetRoutesService {
         let lineId = line.line.short_name;
         let arrivalName = line.arrival_stop.name;
         let departureName = line.departure_stop.name;
-      // let http = new HttpClient();
-
-        // http://localhost:3000/getStop/50/Damen%20%26%20Milwaukee%2FNorth%20Ave/Damen%20%26%20Montrose
         let promise = new Promise((resolve, reject) => {
             let apiURL =  `http://localhost:3000/getStop/${lineId}/${encodeURIComponent(departureName)}/${encodeURIComponent(arrivalName)}`;
             return  this.http.get(apiURL)
